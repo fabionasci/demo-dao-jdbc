@@ -1,10 +1,9 @@
 package application;
 
-import db.DB;
-import db.DbException;
 import model.entities.Department;
+import model.entities.Seller;
 
-import java.sql.*;
+import java.util.Date;
 
 public class Main {
 
@@ -13,6 +12,10 @@ public class Main {
 
         Department d = new Department(1, "Books");
         System.out.println(d);
+
+        Seller s = new Seller(1, "Bob", "bobmail@gmial.com", new Date(), 3000.0);
+        System.out.println(s);
+
 
 //        Connection conn = null;
 //        Statement st = null;
