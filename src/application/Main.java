@@ -20,9 +20,6 @@ public class Main {
 //        Connection conn = null;
 //        Statement st = null;
 //
-//        final String QUERY = "";
-//        final String QUERY2 = "";
-//
 //        try {
 //            conn = DB.getConnection();
 //            conn.setAutoCommit(false);
