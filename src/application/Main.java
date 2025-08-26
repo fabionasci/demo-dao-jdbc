@@ -18,6 +18,7 @@ public class Main {
 
         Locale.setDefault(Locale.US);
         Scanner scanner = new Scanner(System.in);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         SellerDao sellerDao = DaoFactory.createSellerDao();
 
         System.out.println("=== TEST 1: Seller getById ===");
@@ -36,27 +37,70 @@ public class Main {
             System.out.println(s);
         }
 
-        System.out.println("\n=== TEST 4: Seller insert ===");
+        String sellerName;
+        String sellerEmail;
+        String birthDateStr;
+        Date birthDate;
+        Double salary;
+        Integer departmentId;
 
-        System.out.println("\n===> Enter Department ID: ");
-        int departmentId = scanner.nextInt();
-        Department department = new Department(departmentId, null);
+        System.out.println("Want to run INSERT seller ? (Y/N): ");
+        String insert = scanner.nextLine();
 
-        System.out.println("\n===> Enter Seller name: ");
-        String sellerName = scanner.next();
-        System.out.println("\n===> Enter Seller email: ");
-        String sellerEmail = scanner.next();
-        System.out.println("\n===> Enter Seller birth date (dd/MM/yyyy): ");
-        String birthDateStr = scanner.next();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date birthDate = sdf.parse(birthDateStr);
-        System.out.println("\n===> Enter Seller salary: ");
-        Double salary = scanner.nextDouble();
+        if (insert.equals("Y")) {
 
-        Seller seller2 = new Seller(null, sellerName, sellerEmail, birthDate, salary, department);
+            System.out.println("\n=== TEST 4: Seller insert ===");
+            System.out.println("\n===> Enter Seller name: ");
+            sellerName = scanner.nextLine();
+            System.out.println("\n===> Enter Seller email: ");
+            sellerEmail = scanner.nextLine();
+            System.out.println("\n===> Enter Seller birth date (dd/MM/yyyy): ");
+            birthDateStr = scanner.nextLine();
+            birthDate = sdf.parse(birthDateStr);
+            System.out.println("\n===> Enter Seller salary: ");
+            salary = scanner.nextDouble();
+            scanner.nextLine(); // consome o ENTER deixado pelo nextDouble
+            System.out.println("\n===> Enter Department ID: ");
+            departmentId = scanner.nextInt();
+            scanner.nextLine(); // consome o ENTER deixado pelo nextInt
+            Department department = new Department(departmentId, null);
 
-        sellerDao.insert(seller2);
-        System.out.println("Inserted! ID: " + seller2.getId());
+            Seller sellerInsert = new Seller(null, sellerName, sellerEmail, birthDate, salary, department);
+
+            sellerDao.insert(sellerInsert);
+            System.out.println("Inserted! ID: " + sellerInsert.getId());
+        }
+
+        System.out.println("Want to run UPDATE seller ? (Y/N): ");
+        String update = scanner.next();
+
+        if (update.equalsIgnoreCase("y")) {
+
+            System.out.println("\n=== TEST 5: Seller update ===");
+
+            System.out.println("\n===> Enter Seller ID: ");
+            Integer sellerId = scanner.nextInt();
+            scanner.nextLine(); // consome o ENTER deixado pelo nextInt
+            System.out.println("\n===> Enter Seller name: ");
+            sellerName = scanner.nextLine();
+            System.out.println("\n===> Enter Seller email: ");
+            sellerEmail = scanner.nextLine();
+            System.out.println("\n===> Enter Seller birth date (dd/MM/yyyy): ");
+            birthDateStr = scanner.nextLine();
+            birthDate = sdf.parse(birthDateStr);
+            System.out.println("\n===> Enter Seller salary: ");
+            salary = scanner.nextDouble();
+            scanner.nextLine(); // consome o ENTER deixado pelo nextDouble
+            System.out.println("\n===> Enter Department ID: ");
+            departmentId = scanner.nextInt();
+            scanner.nextLine(); // consome o ENTER deixado pelo nextInt
+            Department department2 = new Department(departmentId, null);
+
+            Seller sellerUpdate = new Seller(sellerId, sellerName, sellerEmail, birthDate, salary, department2);
+
+            sellerDao.update(sellerUpdate);
+            System.out.println("Updated! ID: " + sellerUpdate.getId());
+        }
 
     }
 }
