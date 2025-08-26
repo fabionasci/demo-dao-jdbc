@@ -61,7 +61,6 @@ public class SellerDaoJDBC implements SellerDao {
     @Override
     public void update(Seller seller) {
         PreparedStatement ps = null;
-        ResultSet rs = null;
 
         String sql = "UPDATE seller " +
                      "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? " +
@@ -88,7 +87,23 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public void deleteById(Integer id) {
+        PreparedStatement ps = null;
 
+        String sql = "DELETE FROM seller " +
+                     "WHERE Id = ?";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(ps);
+        }
     }
 
     @Override
@@ -103,6 +118,7 @@ public class SellerDaoJDBC implements SellerDao {
         try {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
+
             rs = ps.executeQuery();
 
             if (rs.next()){
@@ -129,7 +145,7 @@ public class SellerDaoJDBC implements SellerDao {
 
         String sql = "select seller.*, department.Name as DepName " +
                 "FROM seller INNER JOIN department ON seller.DepartmentId = department.Id " +
-                "ORDER BY seller.Name";
+                "ORDER BY seller.Id";
 
         try {
             ps = conn.prepareStatement(sql);
@@ -160,7 +176,6 @@ public class SellerDaoJDBC implements SellerDao {
             DB.closeStatement(ps);
             DB.closeResultSet(rs);
         }
-
     }
 
     @Override

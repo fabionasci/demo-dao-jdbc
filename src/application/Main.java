@@ -102,5 +102,17 @@ public class Main {
             System.out.println("Updated! ID: " + sellerUpdate.getId());
         }
 
+        System.out.println("Want to run DELETE seller ? (Y/N): ");
+        String delete = scanner.next();
+        if (delete.equalsIgnoreCase("y")) {
+
+            System.out.println("\n=== TEST 6: Seller delete ===");
+
+            System.out.println("\n===> Enter Seller ID: ");
+            Integer sellerId = scanner.nextInt();
+
+            sellerDao.deleteById(sellerId);
+            System.out.println("Deleted! ID: " + sellerId);
+        }
     }
 }
