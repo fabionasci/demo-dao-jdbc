@@ -2,14 +2,22 @@ package application;
 
 import model.dao.DaoFactory;
 import model.dao.SellerDao;
+import model.entities.Department;
 import model.entities.Seller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
+        Locale.setDefault(Locale.US);
+        Scanner scanner = new Scanner(System.in);
         SellerDao sellerDao = DaoFactory.createSellerDao();
 
         System.out.println("=== TEST 1: Seller getById ===");
@@ -27,5 +35,28 @@ public class Main {
         for (Seller s : sellers1) {
             System.out.println(s);
         }
+
+        System.out.println("\n=== TEST 4: Seller insert ===");
+
+        System.out.println("\n===> Enter Department ID: ");
+        int departmentId = scanner.nextInt();
+        Department department = new Department(departmentId, null);
+
+        System.out.println("\n===> Enter Seller name: ");
+        String sellerName = scanner.next();
+        System.out.println("\n===> Enter Seller email: ");
+        String sellerEmail = scanner.next();
+        System.out.println("\n===> Enter Seller birth date (dd/MM/yyyy): ");
+        String birthDateStr = scanner.next();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date birthDate = sdf.parse(birthDateStr);
+        System.out.println("\n===> Enter Seller salary: ");
+        Double salary = scanner.nextDouble();
+
+        Seller seller2 = new Seller(null, sellerName, sellerEmail, birthDate, salary, department);
+
+        sellerDao.insert(seller2);
+        System.out.println("Inserted! ID: " + seller2.getId());
+
     }
 }
