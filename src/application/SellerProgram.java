@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class Main {
+public class SellerProgram {
 
     public static void main(String[] args) throws ParseException {
 
